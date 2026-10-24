@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIL · Monitor Hub | Revive Islamic Legacy</title>
+    <!-- Jameel Noori Nastaleeq font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mehdi-torabiv/jameel-noori-nastaleeq@main/jameel-noori-nastaleeq.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        /* Urdu font family — Jameel Noori Nastaleeq */
+        [lang="ur"], .urdu-text, .urdu-tagline, .urdu-mission, .badge, .platform-header h2 span {
+            font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Segoe UI', 'Tahoma', sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            padding: 2rem 1.5rem;
+            color: #1e2b3c;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(145deg, #0b2e4f, #1a4d7a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+
+        .urdu-tagline {
+            font-size: 1.6rem;
+            color: #2f5e8c;
+            font-weight: 500;
+            margin-top: 0.3rem;
+            direction: rtl;
+            unicode-bidi: embed;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #4a627a;
+            margin-top: 0.5rem;
+            border-top: 2px solid #d0dfed;
+            display: inline-block;
+            padding-top: 0.8rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        /* platform grid — each platform is a cluster */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .platform-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 20, 40, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            padding: 1.6rem 1.4rem 1.4rem 1.4rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            border: 1px solid #e9eef3;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .platform-card:hover {
+            box-shadow: 0 20px 30px -12px rgba(0, 40, 70, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* WhatsApp card — centered & full width on its own row */
+        .whatsapp-card {
+            grid-column: 1 / -1;
+            max-width: 560px;
+            width: 100%;
+            justify-self: center;
+            margin-top: 0.5rem;
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 2px solid #e3ecf5;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .platform-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .platform-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #12344f;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .platform-header h2 span {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #5e7d9c;
+            margin-left: auto;
+            direction: rtl;
+            line-height: 1.8;
+        }
+
+        /* open-all button */
+        .open-all-btn {
+            margin-left: auto;
+            background: #1d5a8c;
+            color: #ffffff;
+            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: 40px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+            box-shadow: 0 3px 8px rgba(0, 60, 110, 0.25);
+            white-space: nowrap;
+        }
+
+        .open-all-btn:hover {
+            background: #0b3e66;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(0, 60, 110, 0.35);
+        }
+
+        .open-all-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 60, 110, 0.3);
+        }
+
+        .open-all-btn svg {
+            width: 13px;
+            height: 13px;
+            fill: currentColor;
+        }
+
+        /* link list inside each card */
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .link-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .link-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #52718b;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .link-label .badge {
+            background: #e1edf9;
+            color: #1b4c7c;
+            padding: 0.15rem 0.6rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 0.2px;
+            margin-left: 0.3rem;
+            direction: rtl;
+            line-height: 1.8;
+        }
+
+        .link-anchor {
+            display: block;
+            background: #f7faff;
+            padding: 0.65rem 0.9rem;
+            border-radius: 14px;
+            font-size: 0.82rem;
+            color: #0d3b66;
+            text-decoration: none;
+            border: 1px solid #d9e4f0;
+            transition: background 0.15s, border-color 0.15s, box-shadow 0.1s;
+            word-break: break-all;
+            font-weight: 500;
+            line-height: 1.4;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .link-anchor:hover {
+            background: #e2efff;
+            border-color: #7ba9d4;
+            box-shadow: 0 2px 5px rgba(0, 85, 150, 0.1);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+        }
+
+        /* Urdu RTL support */
+        .urdu-text {
+            direction: rtl;
+            unicode-bidi: embed;
+        }
+
+        /* mission footer */
+        .mission-footer {
+            background: linear-gradient(135deg, #0b2a44 0%, #153b59 100%);
+            border-radius: 22px;
+            padding: 1.8rem 2rem;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.2rem;
+        }
+
+        .mission-text {
+            font-size: 1.1rem;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 70%;
+        }
+
+        .mission-text strong {
+            font-weight: 700;
+            color: #ffdf9e;
+            font-size: 1.15rem;
+            display: block;
+            text-align: right;
+            direction: rtl;
+            unicode-bidi: embed;
+            margin-bottom: 0.35rem;
+        }
+
+        .urdu-mission {
+            direction: rtl;
+            unicode-bidi: embed;
+            font-size: 1.15rem;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-top: 0.5rem;
+            padding-right: 0.5rem;
+            line-height: 2;
+            text-align: right;
+        }
+
+        .hashtag {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: #1d4c73;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            white-space: nowrap;
+            border: 1px solid #4279a8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* bold, good looking micro note */
+        .extra-note {
+            margin-top: 1.6rem;
+            text-align: center;
+        }
+
+        .extra-note span {
+            display: inline-block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: linear-gradient(135deg, #17466d, #0e3455);
+            padding: 0.65rem 1.8rem;
+            border-radius: 50px;
+            box-shadow: 0 6px 16px -4px rgba(0, 40, 70, 0.4);
+            border: 1px solid #2c6795;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 650px) {
+            body { padding: 1.2rem; }
+            .page-header h1 { font-size: 1.8rem; }
+            .urdu-tagline { font-size: 1.3rem; }
+            .mission-footer { flex-direction: column; gap: 1.2rem; text-align: center; }
+            .mission-text { max-width: 100%; font-size: 1rem; }
+            .urdu-mission { font-size: 1rem; }
+            .mission-text strong { text-align: center; }
+            .hashtag { font-size: 1rem; padding: 0.4rem 1rem; }
+            .platform-card { padding: 1.2rem; }
+            .whatsapp-card { max-width: 100%; }
+            .open-all-btn { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- header -->
+        <div class="page-header">
+            <h1>📌 RIL · MONITORING DASHBOARD</h1>
+            <div class="urdu-tagline" lang="ur">اسلامی ورثے کی تجدید، امتِ مسلمہ کی آواز</div>
+            <div class="subhead">Revive Islamic Legacy — all platforms · clustered for easy monitoring</div>
+        </div>
+
+        <!-- platform clusters -->
+        <div class="platform-grid">
+
+            <!-- 1. FACEBOOK -->
+            <div class="platform-card" data-platform="facebook">
+                <div class="platform-header">
+                    <span class="platform-icon">📘</span>
+                    <h2>Facebook <span lang="ur">فیس بک</span></h2>
+                    <button class="open-all-btn" onclick="openAll('facebook')">
+                        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        Open All
+                    </button>
+                </div>
+                <div class="link-list">
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — Urdu</div>
+                        <a class="link-anchor" href="https://www.facebook.com/share/1Jw8ZAMzKQ/" target="_blank" rel="noopener noreferrer">https://www.facebook.com/share/1Jw8ZAMzKQ/</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — English</div>
+                        <a class="link-anchor" href="https://www.facebook.com/share/1CD8uKhKu6/" target="_blank" rel="noopener noreferrer">https://www.facebook.com/share/1CD8uKhKu6/</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">Revive Islamic Legacy</div>
+                        <a class="link-anchor" href="https://www.facebook.com/share/1m6e78tica/" target="_blank" rel="noopener noreferrer">https://www.facebook.com/share/1m6e78tica/</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. YOUTUBE -->
+            <div class="platform-card" data-platform="youtube">
+                <div class="platform-header">
+                    <span class="platform-icon">▶️</span>
+                    <h2>YouTube <span lang="ur">یوٹیوب</span></h2>
+                    <button class="open-all-btn" onclick="openAll('youtube')">
+                        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        Open All
+                    </button>
+                </div>
+                <div class="link-list">
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — Urdu</div>
+                        <a class="link-anchor" href="https://youtube.com/@riltoday?si=_kmm-6GzM4apeFnB" target="_blank" rel="noopener noreferrer">https://youtube.com/@riltoday</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — English</div>
+                        <a class="link-anchor" href="https://youtube.com/@user-om6le7hq8u?si=L60_xgmbFMZRwdGI" target="_blank" rel="noopener noreferrer">https://youtube.com/@user-om6le7hq8u</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">Revive Islamic Legacy</div>
+                        <a class="link-anchor" href="https://youtube.com/@reviveislamiclegacy?si=2pgPJOTD5ANysNr_" target="_blank" rel="noopener noreferrer">https://youtube.com/@reviveislamiclegacy</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. INSTAGRAM -->
+            <div class="platform-card" data-platform="instagram">
+                <div class="platform-header">
+                    <span class="platform-icon">📸</span>
+                    <h2>Instagram <span lang="ur">انسٹاگرام</span></h2>
+                    <button class="open-all-btn" onclick="openAll('instagram')">
+                        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        Open All
+                    </button>
+                </div>
+                <div class="link-list">
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — Urdu</div>
+                        <a class="link-anchor" href="https://www.instagram.com/riltoday?dlrf=emhhZTJnbW13YWlx" target="_blank" rel="noopener noreferrer">https://www.instagram.com/riltoday</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — English</div>
+                        <a class="link-anchor" href="https://www.instagram.com/riltodayenglish?srtk=M3A1ODR2MHpkbzNy" target="_blank" rel="noopener noreferrer">https://www.instagram.com/riltodayenglish</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">Revive Islamic Legacy</div>
+                        <a class="link-anchor" href="https://www.instagram.com/reviveislamiclegacy?vrfl=dTRpd2piaHYxa2Vj" target="_blank" rel="noopener noreferrer">https://www.instagram.com/reviveislamiclegacy</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. TIKTOK -->
+            <div class="platform-card" data-platform="tiktok">
+                <div class="platform-header">
+                    <span class="platform-icon">🎵</span>
+                    <h2>TikTok <span lang="ur">ٹک ٹاک</span></h2>
+                    <button class="open-all-btn" onclick="openAll('tiktok')">
+                        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        Open All
+                    </button>
+                </div>
+                <div class="link-list">
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — Urdu</div>
+                        <a class="link-anchor" href="https://www.tiktok.com/@riltodayofficial?_r=1&_t=ZS-9AZkgwach05" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@riltodayofficial</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — English</div>
+                        <a class="link-anchor" href="https://www.tiktok.com/@riltody2?_r=1&_t=ZS-9AZkvlXrtxJ" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@riltody2</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">Revive Islamic Legacy</div>
+                        <a class="link-anchor" href="https://www.tiktok.com/@reviveislamiclegecy?_r=1&_t=ZS-9AZkcDRWlvQ" target="_blank" rel="noopener noreferrer">https://www.tiktok.com/@reviveislamiclegecy</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. WHATSAPP — moved to last, centered -->
+            <div class="platform-card whatsapp-card" data-platform="whatsapp">
+                <div class="platform-header">
+                    <span class="platform-icon">💬</span>
+                    <h2>WhatsApp <span lang="ur">واٹس ایپ</span></h2>
+                    <button class="open-all-btn" onclick="openAll('whatsapp')">
+                        <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+                        Open All
+                    </button>
+                </div>
+                <div class="link-list">
+                    <div class="link-item">
+                        <div class="link-label">Group 1 <span class="badge" lang="ur">گروپ 1</span></div>
+                        <a class="link-anchor" href="https://chat.whatsapp.com/LeJ41pxVa2mKrImg0QEqv3?s=cl&p=a&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer">https://chat.whatsapp.com/LeJ41pxVa2mKrImg0QEqv3</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">Group 2 <span class="badge" lang="ur">گروپ 2</span></div>
+                        <a class="link-anchor" href="https://chat.whatsapp.com/JbOyWwgd6dy3BCAUpVwLuG?s=cl&p=a&mlu=4&ilr=4" target="_blank" rel="noopener noreferrer">https://chat.whatsapp.com/JbOyWwgd6dy3BCAUpVwLuG</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — Urdu <span class="badge" lang="ur">چینل</span></div>
+                        <a class="link-anchor" href="https://whatsapp.com/channel/0029VbBqNsF8aKvBvUSax13z" target="_blank" rel="noopener noreferrer">https://whatsapp.com/channel/0029VbBqNsF8aKvBvUSax13z</a>
+                    </div>
+                    <div class="link-item">
+                        <div class="link-label">RIL Today — English <span class="badge" lang="ur">چینل</span></div>
+                        <a class="link-anchor" href="https://whatsapp.com/channel/0029VbDeXMMGufIq4FNDhp3y" target="_blank" rel="noopener noreferrer">https://whatsapp.com/channel/0029VbDeXMMGufIq4FNDhp3y</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer / mission -->
+        <div class="mission-footer">
+            <div class="mission-text">
+                <strong lang="ur">ہمارا مشن، آپ کا تعاون</strong>
+                <div class="urdu-mission" lang="ur">اسلامی تاریخ، مسلم تہذیب و تمدن، عظیم مسلم شخصیات اور دنیا بھر کے مظلوم مسلمانوں کی آواز بننے کے لیے ہمارے سوشل میڈیا پلیٹ فارمز کو فالو کریں، واٹس ایپ چینلز جوائن کریں اور ہمارے پیغامات دوسروں تک پہنچائیں۔</div>
+            </div>
+            <div class="hashtag">#ReviveIslamicLegacy</div>
+        </div>
+
+        <!-- bold, good looking micro note -->
+        <div class="extra-note">
+            <span>⏤ Made with '❤️' by umarkalyal in Kashmir. ⏤</span>
+        <br>
+            <span>⏤ Dated: Sat Oct 24 10:42:44 AM PKT 2026 ⏤</span>
+
+        </div>
+    </div>
+
+    <script>
+        // Link data per platform
+        const platformLinks = {
+            facebook: [
+                "https://www.facebook.com/share/1Jw8ZAMzKQ/",
+                "https://www.facebook.com/share/1CD8uKhKu6/",
+                "https://www.facebook.com/share/1m6e78tica/"
+            ],
+            youtube: [
+                "https://youtube.com/@riltoday?si=_kmm-6GzM4apeFnB",
+                "https://youtube.com/@user-om6le7hq8u?si=L60_xgmbFMZRwdGI",
+                "https://youtube.com/@reviveislamiclegacy?si=2pgPJOTD5ANysNr_"
+            ],
+            instagram: [
+                "https://www.instagram.com/riltoday?dlrf=emhhZTJnbW13YWlx",
+                "https://www.instagram.com/riltodayenglish?srtk=M3A1ODR2MHpkbzNy",
+                "https://www.instagram.com/reviveislamiclegacy?vrfl=dTRpd2piaHYxa2Vj"
+            ],
+            tiktok: [
+                "https://www.tiktok.com/@riltodayofficial?_r=1&_t=ZS-9AZkgwach05",
+                "https://www.tiktok.com/@riltody2?_r=1&_t=ZS-9AZkvlXrtxJ",
+                "https://www.tiktok.com/@reviveislamiclegecy?_r=1&_t=ZS-9AZkcDRWlvQ"
+            ],
+            whatsapp: [
+                "https://chat.whatsapp.com/LeJ41pxVa2mKrImg0QEqv3?s=cl&p=a&mlu=4&ilr=4",
+                "https://chat.whatsapp.com/JbOyWwgd6dy3BCAUpVwLuG?s=cl&p=a&mlu=4&ilr=4",
+                "https://whatsapp.com/channel/0029VbBqNsF8aKvBvUSax13z",
+                "https://whatsapp.com/channel/0029VbDeXMMGufIq4FNDhp3y"
+            ]
+        };
+
+        function openAll(platform) {
+            const links = platformLinks[platform];
+            if (!links) return;
+            links.forEach(url => {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            });
+        }
+    </script>
+</body>
+</html>
