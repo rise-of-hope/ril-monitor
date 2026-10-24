@@ -49,7 +49,7 @@ A single-page HTML dashboard for monitoring all **Revive Islamic Legacy (RIL)** 
 - RIL Today Channel — Urdu: https://whatsapp.com/channel/0029VbBqNsF8aKvBvUSax13z
 - RIL Today Channel — English: https://whatsapp.com/channel/0029VbDeXMMGufIq4FNDhp3y
 
-## Customization
+<!-- ## Customization
 
 To update links, edit the `platformLinks` object inside the `<script>` tag at the bottom of `index.html`:
 
@@ -59,3 +59,4 @@ const platformLinks = {
  youtube:  [ "url1", "url2", ... ],
  // ...
 };   
+-->
